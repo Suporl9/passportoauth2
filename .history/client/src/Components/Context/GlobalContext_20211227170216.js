@@ -1,0 +1,20 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+const myContext = React.createContext();
+function GlobalContext({ children }) {
+  const [user, setUser] = useState("");
+
+  const getUser = async () => {
+    const userObj = await axios.get("/test").then((resp) => resp.data);
+    console.log(userObj);
+    setUser(userObj);
+  };
+  useEffect(() => {
+    getUser();
+    console.log(user);
+  }, []);
+
+  return <myContext.Provider value={"fe"}>{children}</myContext.Provider>;
+}
+
+export default GlobalContext;
